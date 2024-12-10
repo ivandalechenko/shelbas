@@ -111,6 +111,11 @@
             }
         }
 
+        &_error {
+            color: #ff3838 !important;
+            border: 6px solid #ff3838 !important;
+        }
+
         &_inner {
             backdrop-filter: blur(10px);
             width: 100%;

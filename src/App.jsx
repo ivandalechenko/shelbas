@@ -23,6 +23,7 @@ function App() {
   const [wastedKK, setwastedKK] = useState(false);
   const [hideWallet, sethideWallet] = useState(false);
   const [showLb, setshowLb] = useState(false);
+  const [walletError, setwalletError] = useState(false);
   useEffect(() => {
     inteval = setInterval(() => {
       gameStore.tik()
@@ -34,7 +35,15 @@ function App() {
   }, [])
 
   const fixStat = () => {
-    localStorage.setItem('wallet', wallet)
+    if (wallet.length !== 'FG9UsNBpP57sWJBMya8TiMe1Xe6RuiQdWWL2Mmt6izkJ'.length) {
+      setwalletError(true)
+      setTimeout(() => {
+        setwalletError(false)
+      }, 1000);
+    } else {
+      sethideWallet(true)
+      localStorage.setItem('wallet', wallet)
+    }
   }
   return (
     <div className='App'>
@@ -54,12 +63,11 @@ function App() {
                 KK
               </div>
             </> : <>
-              <input type="text" placeholder='SoL wallet' value={wallet} onChange={(e) => {
+              <input type="text" className={`${walletError && "hero_wasted_error"}`} placeholder='SoL wallet' value={wallet} onChange={(e) => {
                 setwallet(e.target.value)
               }} />
               <div className='hero_wasted_del'></div>
               <div className='hero_wasted_btn' onClick={() => {
-                sethideWallet(true)
                 fixStat()
               }}>
                 KK
@@ -112,7 +120,10 @@ function App() {
                 {speech[gameStore.bullets - 1]}
               </div> : <></>}
             <div className="hero_shelbic free_img">
-              <img src='/img/hero.png' alt='decor' />
+              {
+                gameStore.bullets === 0 && gameStore.score !== 0 ? <img src='/img/heroDie.png' alt='decor' /> : <img src='/img/hero.png' alt='decor' />
+              }
+
             </div>
             <div className="hero_header">
               THOMAS SHELBYC

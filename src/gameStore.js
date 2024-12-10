@@ -28,7 +28,9 @@ class GameStore {
 
     loose() {
         this.bullets = 0;
-        this.gameOver = true;
+        setTimeout(() => {
+            this.gameOver = true;
+        }, 2000);
     }
 }
 
